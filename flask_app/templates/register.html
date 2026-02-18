@@ -1,7 +1,20 @@
-﻿<h2>Register</h2>
-<form method="POST">
-    <p>Username: <input type="text" name="username" required></p>
-    <p>Password: <input type="password" name="password" required></p>
-    <p><input type="submit" value="Register"></p>
-</form>
-<p><a href="/login">Already have an account? Login</a></p>
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Alpha - Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
+</head>
+<body>
+    <h1 class="gradient-title">TEAM ALPHA</h1>
+    <div class="script-subtitle">Register</div>
+    <form method="POST" style="margin-top: 30px;">
+        <p><input type="text" name="username" placeholder="Username" required style="padding: 10px; margin: 10px; border-radius: 5px; border: none;"></p>
+        <p><input type="password" name="password" placeholder="Password" required style="padding: 10px; margin: 10px; border-radius: 5px; border: none;"></p>
+        <p><input type="submit" value="Register" class="btn"></p>
+    </form>
+    <p><a href="/login" style="color: white; text-decoration: none;">Already have an account? Log in</a></p>
+</body>
+</html>

@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Upload Media</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Alpha - Upload Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
 </head>
 <body>
-    <h2>Upload your media</h2>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" required>
+    <h1 class="gradient-title">TEAM ALPHA</h1>
+    <div class="script-subtitle">Upload Media</div>
+    <form method="POST" enctype="multipart/form-data" style="margin-top: 30px;">
+        <input type="file" name="file" required style="padding: 10px; margin: 10px; color: white;">
         <br><br>
-        <button type="submit">Upload</button>
+        <button type="submit" class="btn">Upload</button>
     </form>
-    <a href="/dashboard">Back to dashboard</a>
+    <a href="/dashboard"><button class="btn" style="margin-top: 20px; background: #666;">Back</button></a>
 </body>
 </html>

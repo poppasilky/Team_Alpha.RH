@@ -1,14 +1,18 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Team Alpha - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
 </head>
 <body>
-    <h1>Welcome!</h1>
-    <p>
-        <a href="/login">Login</a> or <a href="/register">Register</a>
-    </p>
+    <h1 class="gradient-title">TEAM ALPHA</h1>
+    <div class="script-subtitle">Welcome</div>
+    <div style="margin-top: 40px;">
+        <a href="/login"><button class="btn">Login</button></a>
+        <a href="/register"><button class="btn" style="margin-left: 10px;">Register</button></a>
+    </div>
 </body>
 </html>

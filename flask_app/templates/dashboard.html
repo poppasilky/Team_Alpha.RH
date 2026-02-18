@@ -1,4 +1,20 @@
-﻿<h1>Welcome, {{ username }}!</h1>
-<p>You are logged in.</p>
-<a href="/upload">Upload media</a>
-<p><a href="/logout">Logout</a></p>
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Alpha - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
+</head>
+<body>
+    <h1 class="gradient-title">TEAM ALPHA</h1>
+    <div class="script-subtitle">Dashboard</div>
+    <p style="color: white; font-size: 20px; margin-top: 20px;">Welcome, {{ username }}!</p>
+    <p style="color: white;">you are logged in!</p>
+    <div style="margin-top: 30px;">
+        <a href="/upload"><button class="btn">Upload Media</button></a>
+        <a href="/logout"><button class="btn" style="margin-left: 10px; background: #666;">Logout</button></a>
+    </div>
+</body>
+</html>
