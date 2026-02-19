@@ -1,15 +1,11 @@
 body {
     margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: linear-gradient(135deg, #C5ADC5, #B2B5E0);
+    min-height: 100vh;
+    display: block; /* Allows elements to stack naturally from top to bottom */
+    background: linear-gradient(135deg, #C5ADC5, #B2B5E0) fixed;
     font-family: 'Fredoka', sans-serif;
     text-align: center;
 }
-
 .gradient-title {
     font-size: 70px;
     font-weight: 700;
@@ -17,8 +13,26 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin: 0;
+    margin: 10px 0 0 0; /* Tightened margins */
 }
+
+.script-subtitle {
+    font-family: 'Pacifico', cursive;
+    font-size: 30px;
+    color: white;
+    margin-top: 5px;
+}
+
+.btn {
+    margin-top: 15px; /* Reduced from 40px */
+    padding: 8px 20px; /* Slimmer buttons */
+    font-size: 14px; /* Smaller text */
+    border-radius: 6px;
+    background: black;
+    color: white;
+    cursor: pointer;
+}
+/* kept Alondra's code incase we don't like the change
 
 .script-subtitle {
     font-family: 'Pacifico', cursive;
@@ -38,7 +52,7 @@ body {
     cursor: pointer;
     transition: 0.3s ease;
 }
-
+*/
 .btn:hover {
     transform: translateY(-3px);
     background: #333;

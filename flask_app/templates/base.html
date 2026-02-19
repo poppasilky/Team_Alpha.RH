@@ -3,25 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Team Alpha{% endblock %}</title>
+    <title>Team Alpha - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+ 
 </head>
 <body>
-{% block header %}
-<nav style="padding: 10px; background-color: #eee;">
-    <a href="/">Home</a>
+    <nav class="main-nav">
+    <div class="nav-links">
+        <a href="/">Home</a>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Genres ▼</button>
+            <div class="dropdown-content">
+                <a href="/action">Action</a>
+                <a href="/drama">Drama</a>
+                <a href="/comedy">Comedy</a>
+                <a href="/scifi">Science Fiction</a>
+                <a href="/horror">Horror</a>
+            </div>
+        </div>
 
-    <!-- Search bar in navigation -->
-    <form action="/search" method="get" style="display:inline; margin-left:20px;">
-        <input type="text" name="q" placeholder="Search..." required>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </div>
+
+    <form action="/search" method="get" class="search-form">
+        <input type="text" name="q" placeholder="Search movies..." required>
         <button type="submit">Search</button>
     </form>
 </nav>
-{% endblock %}
-<hr>
 
-{% block content %}
-{% endblock %}
+    {% block header %}{% endblock %}
+    
+    <hr>
+    
+    {% block content %}{% endblock %}
+
 <footer style="text-align: center; padding: 1rem; margin-top: 2rem; border-top: 1px solid #ccc; font-size: 0.9rem;">
     <p>
         <a href="https://www.themoviedb.org/" target="_blank">
