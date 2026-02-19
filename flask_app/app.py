@@ -35,6 +35,26 @@ def hash_password(password):
 def home():
     return render_template('home.html')
 
+@app.route('/action')
+def action():
+    return render_template('action.html')
+
+@app.route('/drama')
+def drama():
+    return render_template('drama.html')
+
+@app.route('/comedy')
+def comedy():
+    return render_template('comedy.html')
+
+@app.route('/scifi')
+def scifi():
+    return render_template('scifi.html')
+
+@app.route('/horror')
+def horror():
+    return render_template('horror.html')
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Team Alpha{% endblock %}</title>
+</head>
+<body>
+
+<nav style="padding: 10px; background-color: #eee;">
+    <a href="/">Home</a>
+
+    <!-- Search bar in navigation -->
+    <form action="/search" method="get" style="display:inline; margin-left:20px;">
+        <input type="text" name="q" placeholder="Search..." required>
+        <button type="submit">Search</button>
+    </form>
+</nav>
+
+<hr>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

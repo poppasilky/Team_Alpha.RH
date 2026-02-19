@@ -6,7 +6,9 @@
     <title>Team Alpha - Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
+    <title>Homepage for Team Alpha's Movie Archive</title>
 </head>
+
 <body>
     <h1 class="gradient-title">TEAM ALPHA</h1>
     <div class="script-subtitle">Welcome</div>
@@ -14,5 +16,25 @@
         <a href="/login"><button class="btn">Login</button></a>
         <a href="/register"><button class="btn" style="margin-left: 10px;">Register</button></a>
     </div>
+    <h1>Welcome!</h1>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li>Genres
+                <!-- genre dropout starts here -->
+                <ul class="dropdown">
+                    <li><a href="/action">Action</a></li>
+                    <li><a href="/drama">Drama</a></li>
+                    <li><a href="/comedy">Comedy</a></li>
+                    <li><a href="/scifi">Science Fiction</a></li>
+                    <li><a href="/horror">Horror</a></li>
+                </ul>
+                </li>
+                <!-- genre dropdown ends here -->
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
 </body>
 </html>
