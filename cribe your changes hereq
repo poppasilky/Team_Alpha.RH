@@ -1,0 +1,16 @@
+* [33m9c08443[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Change language attribute from 'es' to 'en'
+* [33m798105a[m Change language attribute from 'es' to 'en' in register.html
+* [33me0e7fe2[m Change language attribute from 'es' to 'en' in login.html
+* [33mf7d008e[m Change HTML language attribute from 'es' to 'en'
+* [33mc002bbd[m Change HTML language attribute from 'es' to 'en'
+* [33m36440bd[m Change language attribute from 'es' to 'en' in home.html
+*   [33m4adaf0f[m Merge pull request #68 from akempley/team_alpha_al
+[32m|[m[33m\[m  
+[32m|[m *   [33mee704c1[m[33m ([m[1;31morigin/team_alpha_al[m[33m)[m Merge branch 'main' into team_alpha_al
+[32m|[m [34m|[m[32m\[m  
+[32m|[m [34m|[m[32m/[m  
+[32m|[m[32m/[m[34m|[m   
+[32m|[m * [33mbf226e5[m Implement  gradient color palette and global UI styling
+[32m|[m [35m|[m * [33mbe0ca8b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m WIP: added TMDB integration and reviews (not yet complete)
+[32m|[m [35m|[m[32m/[m  
+[32m|[m[32m/[m[35m|[m   
