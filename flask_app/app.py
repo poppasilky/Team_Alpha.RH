@@ -7,6 +7,7 @@ import requests
 from dotenv import load_dotenv
 from services import tmdb
 
+
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = '4bfd33473e4141b0533378fad588b6294409464d93d39810'
@@ -14,6 +15,15 @@ UPLOAD_FOLDER = 'flask_app/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['TMDB_API_KEY'] = os.getenv('TMDB_API_KEY')
 print("API Key loaded:", app.config['TMDB_API_KEY'])
+
+@app.context_processor
+def inject_genres():
+    try:
+        all_genres = tmdb.get_genres()
+        return dict(all_genres=all_genres)
+    except Exception as e:
+        print(f"Error fetching genres for dropdown: {e}")
+        return dict(all_genres=[])
 
 def init_db():
     conn = sqlite3.connect('users.db')
@@ -58,25 +68,18 @@ def home():
     print(">>> genre_movies built:", genre_movies.keys())  # debu    
     return render_template('home.html', genre_movies=genre_movies)
 
-@app.route('/action')
-def action():
-    return render_template('action.html')
+@app.route('/genre/<int:genre_id>')
+def genre_page(genre_id):
+    movies = tmdb.get_movies_by_genre(genre_id)
+    
+    genre_name = "Selected Genre"
+    all_genres = tmdb.get_genres()
+    for g in all_genres:
+        if g['id'] == genre_id:
+            genre_name = g['name']
+            break
 
-@app.route('/drama')
-def drama():
-    return render_template('drama.html')
-
-@app.route('/comedy')
-def comedy():
-    return render_template('comedy.html')
-
-@app.route('/scifi')
-def scifi():
-    return render_template('scifi.html')
-
-@app.route('/horror')
-def horror():
-    return render_template('horror.html')
+    return render_template('genre_results.html', movies=movies, genre_name=genre_name)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

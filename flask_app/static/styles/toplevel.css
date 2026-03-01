@@ -57,3 +57,31 @@ body {
     transform: translateY(-3px);
     background: #333;
 }
+
+.movie-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.movie-card {
+    width: 200px;
+    text-align: center;
+    background: #1a1a1a;
+    border-radius: 8px;
+    padding: 10px;
+    color: white;
+}
+
+.movie-card img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+}
+
+.movie-card img:hover {
+    transform: scale(1.05);
+}

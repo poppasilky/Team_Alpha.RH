@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ genre_name }} Movies - Team Alpha{% endblock %}
+
+{% block content %}
+    <h1 class="gradient-title">{{ genre_name }} Movies</h1>
+
+    <div class="movie-grid">
+        {% for movie in movies %}
+            <div class="movie-card">
+                <a href="{{ url_for('movie_detail', movie_id=movie.id) }}">
+                    {% if movie.poster_path %}
+                        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" 
+                             alt="{{ movie.title }}" class="poster">
+                    {% else %}
+                        <div class="no-poster">No Image Available</div>
+                    {% endif %}
+                </a>
+                <div class="movie-info">
+                    <h3>{{ movie.title }}</h3>
+                    <p>Rating: {{ movie.vote_average }}/10</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

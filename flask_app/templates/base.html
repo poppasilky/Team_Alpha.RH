@@ -3,53 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Alpha - Home</title>
+    <title>{% block title %}Team Alpha Movie Archive{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
- 
 </head>
 <body>
     <nav class="main-nav">
-    <div class="nav-links">
-        <a href="/">Home</a>
-        
-        <div class="dropdown">
-            <button class="dropbtn">Genres ▼</button>
-            <div class="dropdown-content">
-                <a href="/action">Action</a>
-                <a href="/drama">Drama</a>
-                <a href="/comedy">Comedy</a>
-                <a href="/scifi">Science Fiction</a>
-                <a href="/horror">Horror</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Genres ▼</button>
+                <div class="dropdown-content">
+                    {% for genre in all_genres %}
+                        <a href="{{ url_for('genre_page', genre_id=genre.id) }}">
+                            {{ genre.name }}
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
+
+            {% if session.get('user_id') %}
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            {% endif %}
         </div>
 
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-    </div>
-
-    <form action="/search" method="get" class="search-form">
-        <input type="text" name="q" placeholder="Search movies..." required>
-        <button type="submit">Search</button>
-    </form>
-</nav>
+        <form action="/search" method="get" class="search-form">
+            <input type="text" name="q" placeholder="Search movies..." required>
+            <button type="submit">Search</button>
+        </form>
+    </nav>
 
     {% block header %}{% endblock %}
     
     <hr>
     
-    {% block content %}{% endblock %}
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
 
-<footer style="text-align: center; padding: 1rem; margin-top: 2rem; border-top: 1px solid #ccc; font-size: 0.9rem;">
-    <p>
-        <a href="https://www.themoviedb.org/" target="_blank">
-            <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" 
-                 alt="TMDB Logo" style="height: 20px; vertical-align: middle; margin-right: 0.5rem;">
-        </a>
-        This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
-    </p>
-</footer>
-
+    <footer style="text-align: center; padding: 1rem; margin-top: 2rem; border-top: 1px solid #ccc; font-size: 0.9rem;">
+        <p>
+            <a href="https://www.themoviedb.org/" target="_blank">
+                <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" 
+                     alt="TMDB Logo" style="height: 20px; vertical-align: middle; margin-right: 0.5rem;">
+            </a>
+            This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
+        </p>
+    </footer>
 </body>
 </html>
