@@ -1,50 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ movie.title }} - Movie Archives</title>
-</head>
-<body>
-    <h1>{{ movie.title }}</h1>
-    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-    <p><strong>Rating:</strong> {{ movie.vote_average }}/10</p>
-    <p>{{ movie.overview }}</p>
+{% extends "base.html" %}
+
+{% block title %}{{ movie.title }} - Movie Archives{% endblock %}
+
+{% block content %}
+<div class="movie-detail-container">
+    <h1 class="gradient-title">{{ movie.title }}</h1>
+    
+    <div class="movie-info-section">
+        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+        <p><strong>Rating:</strong> {{ movie.vote_average }}/10</p>
+        <p class="overview">{{ movie.overview }}</p>
+    </div>
 
     {% if trailer %}
-        <h3>Trailer</h3>
-        <iframe width="560" height="315"
-                src="https://www.youtube.com/embed/{{ trailer.key }}"
-                frameborder="0" allowfullscreen>
-        </iframe>
-    {% endif %}
-
-    <h3>User Reviews</h3>
-
-    {% if session.user_id %}
-        <h4>Your Review</h4>
-        <form method="post" action="{{ url_for('submit_review', movie_id=movie.id) }}">
-            <label>Rating (1-5):</label>
-            <input type="number" name="rating" min="1" max="5" value="{{ user_review.rating if user_review else 5 }}" required>
-            <br>
-            <label>Review:</label>
-            <textarea name="review_text" rows="4">{{ user_review.review_text if user_review else '' }}</textarea>
-            <br>
-            <button type="submit">Submit Review</button>
-        </form>
-    {% else %}
-        <p><a href="{{ url_for('login') }}">Log in</a> to leave a review.</p>
-    {% endif %}
-
-    <h4>All Reviews</h4>
-    {% for review in reviews %}
-        <div class="review">
-            <strong>{{ review.username }}</strong> rated it {{ review.rating }}/5
-            <p>{{ review.review_text }}</p>
-            <small>{{ review.created_at }}</small>
+        <div class="trailer-section">
+            <h3>Trailer</h3>
+            <iframe width="560" height="315"
+                    src="https://www.youtube.com/embed/{{ trailer.key }}"
+                    frameborder="0" allowfullscreen>
+            </iframe>
         </div>
-    {% else %}
-        <p>No reviews yet. Be the first!</p>
-    {% endfor %}
+    {% endif %}
 
-    <p><a href="{{ url_for('home') }}">Back to Home</a></p>
-</body>
-</html>
+    <hr>
+
+    <section class="reviews-section">
+        <h3>User Reviews</h3>
+        </section>
+
+    <p><a href="{{ url_for('home') }}" class="btn">Back to Home</a></p>
+</div>
+{% endblock %}
