@@ -1,5 +1,6 @@
 import os
 import requests
+from flask import current_app
 
 BASE_URL = 'https://api.themoviedb.org/3'
 API_KEY = os.getenv('TMDB_API_KEY')
@@ -49,6 +50,17 @@ def get_popular_movies():
     """Fetch popular movies from TMDB."""
     url = f'{BASE_URL}/movie/popular'
     params = {'api_key': API_KEY, 'language': 'en-US', 'page': 1}
+    resp = requests.get(url, params=params)
+    resp.raise_for_status()
+    return resp.json().get('results', [])
+
+def search_movies(query):
+    """Search for movies by title using a search string."""
+    url = f'{BASE_URL}/search/movie'
+    params = {
+        'api_key': current_app.config['TMDB_API_KEY'],
+        'query': query
+    }
     resp = requests.get(url, params=params)
     resp.raise_for_status()
     return resp.json().get('results', [])

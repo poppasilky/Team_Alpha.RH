@@ -165,6 +165,7 @@ def dashboard():
     
     return render_template('dashboard.html', 
                           username=session.get('username'))
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if 'user_id' not in session:
@@ -191,6 +192,16 @@ def upload():
 def logout():
     session.clear()
     return redirect('/')
+
+@app.route('/search')
+def search():
+    query = request.args.get('q')
+    if query:
+        movies = tmdb.search_movies(query)
+    else:
+        movies = []
+
+    return render_template('genre_results.html', movies=movies, genre_name=f"Results for: {query}")
 
 @app.route('/movie/<int:movie_id>')
 def movie_detail(movie_id):
