@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Homepage for Team Alpha's Movie Archive{% endblock %}
 
@@ -14,22 +14,56 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Top Movies by Genre</h1>
-    {% for genre_name, movies in genre_movies.items() %}
-        <div class="genre-section">
-            <h3>{{ genre_name }}</h3>
-            <div class="movie-row">
-                {% for movie in movies %}
-                    <div class="movie-card" onclick="location.href='{{ url_for('movie_detail', movie_id=movie.id) }}'">
-                        {% if movie.poster_path %}
-                            <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
-                        {% else %}
-                            <div class="no-poster">No Poster</div>
-                        {% endif %}
-                        <p>{{ movie.title }}</p>
-                    </div>
-                {% endfor %}
+    <div class="carousel-wrapper">
+    {% if has_prev %}
+        <a href="{{ url_for('home', offset=offset - 3) }}" class="carousel-btn">❮</a>
+    {% else %}
+        <span class="carousel-btn disabled">❮</span>
+    {% endif %}
+
+    <div class="carousel-viewport">
+        <div class="carousel-slides">
+            {% for movie in movies %}
+            <div class="movie-card" onclick="location.href='{{ url_for('movie_detail', movie_id=movie.id) }}'">
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+                {% else %}
+                    <div class="no-poster">No Poster</div>
+                {% endif %}
+                <p>{{ movie.title }}</p>
             </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
+
+    {% if has_next %}
+        <a href="{{ url_for('home', offset=offset + 3) }}" class="carousel-btn">❯</a>
+    {% else %}
+        <span class="carousel-btn disabled">❯</span>
+    {% endif %}
+</div>
+<!-- Chat Section -->
+<div class="chat-section">
+    <h3>💬 Movie Chat</h3>
+    <div class="chat-feed">
+        {% for comment in comments %}
+        <div class="chat-message">
+            <strong>{{ comment.username }}</strong>
+            <small>{{ comment.created_at[:16] }}</small>
+            <p>{{ comment.content }}</p>
+        </div>
+        {% else %}
+        <p>No messages yet.</p>
+        {% endfor %}
+    </div>
+
+    {% if session.user_id %}
+    <form action="{{ url_for('post_comment', offset=offset) }}" method="post" class="chat-form">
+        <textarea name="content" placeholder="Write something... (e.g., 'Hey, check out The Matrix!')" required></textarea>
+        <button type="submit">Post</button>
+    </form>
+    {% else %}
+    <p><a href="{{ url_for('login', next=url_for('home', offset=offset)) }}">Log in</a> to chat.</p>
+    {% endif %}
+</div>
 {% endblock %}

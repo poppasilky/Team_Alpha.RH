@@ -1,14 +1,14 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 import sqlite3
 import hashlib
 import os
 from werkzeug.utils import secure_filename
 import requests
 from dotenv import load_dotenv
-from services import tmdb
+load_dotenv()                         
 
+from services import tmdb               
 
-load_dotenv()
 app = Flask(__name__)
 app.secret_key = '4bfd33473e4141b0533378fad588b6294409464d93d39810'
 UPLOAD_FOLDER = 'flask_app/uploads'
@@ -47,6 +47,15 @@ def init_db():
             UNIQUE(user_id, movie_id)
         )
     ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS global_comments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -60,13 +69,35 @@ def hash_password(password):
 
 @app.route('/')
 def home():
-    genres = tmdb.get_genres()[:5]  
-    genre_movies = {}
-    for genre in genres:
-        movies = tmdb.get_movies_by_genre(genre['id'])[:10]  
-        genre_movies[genre['name']] = movies
-    print(">>> genre_movies built:", genre_movies.keys())  # debu    
-    return render_template('home.html', genre_movies=genre_movies)
+    offset = request.args.get('offset', 0, type=int)
+    all_movies = tmdb.get_popular_movies()
+    total_movies = len(all_movies)
+
+    movies_per_page = 3
+    start = offset
+    end = start + movies_per_page
+    movies_to_show = all_movies[start:end]
+
+    has_prev = offset > 0
+    has_next = end < total_movies
+    
+    conn = get_db_connection()
+    comments = conn.execute('''
+        SELECT global_comments.*, users.username
+        FROM global_comments
+        JOIN users ON global_comments.user_id = users.id
+        ORDER BY created_at DESC
+        LIMIT 20
+    ''').fetchall()
+    conn.close()
+    
+    return render_template('home.html',
+                           movies=movies_to_show,
+                           offset=offset,
+                           has_prev=has_prev,
+                           has_next=has_next,
+                           comments=comments)
+                        
 
 @app.route('/genre/<int:genre_id>')
 def genre_page(genre_id):
@@ -219,6 +250,53 @@ def submit_review(movie_id):
     conn.close()
 
     return redirect(f'/movie/{movie_id}')
+
+@app.route('/quick_review', methods=['POST'])
+def quick_review():
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    movie_id = request.form.get('movie_id', type=int)
+    rating = request.form.get('rating', type=int)
+    review_text = request.form.get('review_text', '')
+
+    if not movie_id or not rating or rating < 1 or rating > 5:
+        return "Invalid input."
+
+    user_id = session['user_id']
+    conn = get_db_connection()
+    existing = conn.execute('SELECT id FROM reviews WHERE user_id = ? AND movie_id = ?',
+                            (user_id, movie_id)).fetchone()
+    if existing:
+        conn.execute('''
+            UPDATE reviews
+            SET rating = ?, review_text = ?, created_at = CURRENT_TIMESTAMP
+            WHERE user_id = ? AND movie_id = ?
+        ''', (rating, review_text, user_id, movie_id))
+    else:
+        conn.execute('''
+            INSERT INTO reviews (user_id, movie_id, rating, review_text)
+            VALUES (?, ?, ?, ?)
+        ''', (user_id, movie_id, rating, review_text))
+    conn.commit()
+    conn.close()
+    offset = request.form.get('offset', 0, type=int)
+    
+    return redirect(url_for('home', offset=offset))
+
+@app.route('/post_comment', methods=['POST'])
+def post_comment():
+    if 'user_id' not in session:
+        return redirect('/login')
+    content = request.form.get('content', '').strip()
+    if content:
+        conn = get_db_connection()
+        conn.execute('INSERT INTO global_comments (user_id, content) VALUES (?, ?)',
+                     (session['user_id'], content))
+        conn.commit()
+        conn.close()
+    offset = request.args.get('offset', 0)
+    return redirect(url_for('home', offset=offset))
 
 if __name__ == '__main__':
     init_db()

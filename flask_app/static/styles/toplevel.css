@@ -67,6 +67,7 @@ body {
 }
 
 .movie-card {
+    box-sizing: border-box !important; 
     width: 200px;
     text-align: center;
     background: #1a1a1a;
@@ -85,3 +86,97 @@ body {
 .movie-card img:hover {
     transform: scale(1.05);
 }
+
+/* Carousel */
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.carousel-viewport {
+    width: 700px;
+    overflow: hidden;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;   /* centers the slides inside the viewport */
+}
+
+.carousel-slides {
+    display: flex;
+    gap: 30px;
+    flex-wrap: nowrap;
+    /* remove fixed width and margin – let it be determined by content */
+}
+
+.carousel-slides .movie-card {
+    flex: 0 0 auto;
+}
+
+.carousel-btn {
+    background: #333;
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 50%;
+    transition: background 0.2s;
+    display: inline-block;
+    line-height: 1;
+}
+
+.carousel-btn:hover {
+    background: #555;
+}
+
+.carousel-btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
+
+/* Chat Section */
+.chat-section {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+.chat-feed {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.chat-message {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+.chat-message:last-child { border-bottom: none; }
+.chat-message strong { color: #007bff; }
+.chat-message small { color: #777; margin-left: 10px; }
+.chat-message p { margin: 5px 0 0; white-space: pre-wrap; }
+.chat-form {
+    display: flex;
+    gap: 10px;
+}
+.chat-form textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+.chat-form button {
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.chat-form button:hover { background: #218838; }
