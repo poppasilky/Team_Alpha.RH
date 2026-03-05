@@ -26,8 +26,40 @@
 
     <section class="reviews-section">
         <h3>User Reviews</h3>
-        </section>
 
-    <p><a href="{{ url_for('home') }}" class="btn">Back to Home</a></p>
-</div>
+        {% if session.user_id %}
+            <form action="{{ url_for('submit_review', movie_id=movie.id) }}" method="POST" class="review-form">
+                <div class="rating-picker">
+                    <label for="rating">Your Rating: </label>
+                    <select name="rating" id="rating">
+                        <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                        <option value="4">⭐⭐⭐⭐ (Good)</option>
+                        <option value="3">⭐⭐⭐ (Average)</option>
+                        <option value="2">⭐⭐ (Poor)</option>
+                        <option value="1">⭐ (Terrible)</option>
+                    </select>
+                </div>
+                
+                <textarea name="content" placeholder="Write your review here..." required></textarea>
+                
+                <button type="submit" class="btn">Submit Review</button>
+            </form>
+        {% else %}
+            <p>Please <a href="/login">login</a> to leave a review.</p>
+        {% endif %}
+
+        <hr>
+
+        <div class="reviews-feed">
+            {% for review in reviews %}
+                <div class="review-card">
+                    <strong>{{ review.username }}</strong> — {{ review.rating }}/5 Stars
+                    <p>{{ review.content }}</p>
+                    <small>{{ review.created_at }}</small>
+                </div>
+            {% else %}
+                <p>No reviews yet. Be the first!</p>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}

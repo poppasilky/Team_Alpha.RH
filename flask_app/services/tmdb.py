@@ -26,7 +26,7 @@ def get_movies_by_genre(genre_id, page=1):
     resp.raise_for_status()
     return resp.json().get('results', [])
 
-def get_movie_details(movie_id):
+def get_movie_details(movie_id, language='en-US'):
     """Fetch detailed info for a single movie."""
     url = f'{BASE_URL}/movie/{movie_id}'
     params = {'api_key': API_KEY}
@@ -34,7 +34,7 @@ def get_movie_details(movie_id):
     resp.raise_for_status()
     return resp.json()
 
-def get_movie_trailer(movie_id):
+def get_movie_trailer(movie_id, language='en-US'):
     """Fetch videos for a movie and return the first YouTube trailer."""
     url = f'{BASE_URL}/movie/{movie_id}/videos'
     params = {'api_key': API_KEY}

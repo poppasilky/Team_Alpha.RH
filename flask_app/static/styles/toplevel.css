@@ -1,11 +1,27 @@
-body {
+/* --- GLOBAL STYLES --- */
+html, body {
+    height: 100%;
     margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
-    display: block; /* Allows elements to stack naturally from top to bottom */
     background: linear-gradient(135deg, #C5ADC5, #B2B5E0) fixed;
     font-family: 'Fredoka', sans-serif;
     text-align: center;
 }
+
+/* --- MAIN CONTAINER --- */
+.container {
+    flex: 1 0 auto;
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto;
+}
+
+/* --- TYPOGRAPHY --- */
 .gradient-title {
     font-size: 70px;
     font-weight: 700;
@@ -13,7 +29,7 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin: 10px 0 0 0; /* Tightened margins */
+    margin: 10px 0 0 0;
 }
 
 .script-subtitle {
@@ -23,41 +39,24 @@ body {
     margin-top: 5px;
 }
 
+/* --- BUTTONS --- */
 .btn {
-    margin-top: 15px; /* Reduced from 40px */
-    padding: 8px 20px; /* Slimmer buttons */
-    font-size: 14px; /* Smaller text */
+    margin-top: 15px;
+    padding: 8px 20px;
+    font-size: 14px;
     border-radius: 6px;
     background: black;
     color: white;
     cursor: pointer;
-}
-/* kept Alondra's code incase we don't like the change
-
-.script-subtitle {
-    font-family: 'Pacifico', cursive;
-    font-size: 32px;
-    color: white;
-    margin-top: 10px;
+    transition: transform 0.3s ease;
 }
 
-.btn {
-    margin-top: 40px;
-    padding: 12px 30px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: none;
-    background: black;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-*/
 .btn:hover {
     transform: translateY(-3px);
     background: #333;
 }
 
+/* --- MOVIE GRID & CARDS --- */
 .movie-grid {
     display: flex;
     flex-wrap: wrap;
@@ -87,7 +86,7 @@ body {
     transform: scale(1.05);
 }
 
-/* Carousel */
+/* --- CAROUSEL --- */
 .carousel-wrapper {
     display: flex;
     align-items: center;
@@ -100,14 +99,13 @@ body {
     overflow: hidden;
     margin: 0 10px;
     display: flex;
-    justify-content: center;   /* centers the slides inside the viewport */
+    justify-content: center;
 }
 
 .carousel-slides {
     display: flex;
     gap: 30px;
     flex-wrap: nowrap;
-    /* remove fixed width and margin – let it be determined by content */
 }
 
 .carousel-slides .movie-card {
@@ -127,22 +125,15 @@ body {
     line-height: 1;
 }
 
-.carousel-btn:hover {
-    background: #555;
-}
-
-.carousel-btn.disabled {
-    opacity: 0.5;
-    pointer-events: none;
-    cursor: default;
-}
-
-/* Chat Section */
-.chat-section {
+/* --- SECTIONS (Chat & Reviews) --- */
+.chat-section, .reviews-section, .rating-section {
     max-width: 800px;
     margin: 40px auto;
-    padding: 0 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 10px;
 }
+
 .chat-feed {
     max-height: 400px;
     overflow-y: auto;
@@ -152,31 +143,73 @@ body {
     padding: 15px;
     margin-bottom: 20px;
 }
-.chat-message {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
+
+/* --- FOOTER --- */
+.api-footer {
+    flex-shrink: 0; 
+    text-align: center;
+    padding: 20px;
+    background-color: transparent; 
+    border-top: 1px solid rgba(255, 255, 255, 0.3); 
+    width: 100%;
 }
-.chat-message:last-child { border-bottom: none; }
-.chat-message strong { color: #007bff; }
-.chat-message small { color: #777; margin-left: 10px; }
-.chat-message p { margin: 5px 0 0; white-space: pre-wrap; }
-.chat-form {
+
+.api-footer p, .api-footer a {
+    color: white; 
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.api-footer img {
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    opacity: 0.8;
+}
+
+.main-nav {
     display: flex;
-    gap: 10px;
-}
-.chat-form textarea {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-}
-.chat-form button {
+    justify-content: space-between; /* Keeps links on left, forms on right */
+    align-items: center;
     padding: 10px 20px;
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
-.chat-form button:hover { background: #218838; }
+
+.nav-right-group {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Adjust this number to get them as close as you want! */
+}
+
+.search-form {
+    margin: 0;
+}
+
+/*makinfg the language searchbar blend in*/
+.lang-form select {
+    background-color: #000000; 
+    color: #ffffff;            
+    border: 1px solid #444;    
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: 'Fredoka', sans-serif;
+    cursor: pointer;
+    outline: none;
+}
+
+.lang-form select:hover {
+    background-color: #222222;
+    border-color: #666;
+}
+
+/* logic for if someone is logged in as who */
+.login-status {
+    color: white;
+    font-size: 0.9rem;
+    margin-right: 15px;
+    opacity: 0.9;
+}
+
+.login-status strong {
+    color: #ffffff;
+    text-decoration: underline; /* Helps highlight the actual name */
+}

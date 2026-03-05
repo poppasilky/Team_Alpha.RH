@@ -4,13 +4,16 @@
 
 {% block header %}
     <h1 class="gradient-title">TEAM ALPHA</h1>
-    <div class="script-subtitle">Welcome</div>
-    <div style="margin-top: 40px;">
-        <a href="/login"><button class="btn">Login</button></a>
-        <a href="/register"><button class="btn" style="margin-left: 10px;">Register</button></a>
-    </div>
-
     
+    {% if session.user_id %}
+        <div class="script-subtitle">Welcome back, {{ session.get('username') }}</div>
+    {% else %}
+        <div class="script-subtitle">Welcome</div>
+        <div style="margin-top: 40px;">
+            <a href="/login"><button class="btn">Login</button></a>
+            <a href="/register"><button class="btn" style="margin-left: 10px;">Register</button></a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
