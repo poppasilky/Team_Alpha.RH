@@ -12,11 +12,15 @@ from flask_mail import Mail, Message
 from services import tmdb               
 
 app = Flask(__name__)
-app.secret_key = '4bfd33473e4141b0533378fad588b6294409464d93d39810'
+
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
+app.config['TMDB_API_KEY'] = os.getenv('TMDB_API_KEY')
+
 UPLOAD_FOLDER = 'flask_app/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['TMDB_API_KEY'] = os.getenv('TMDB_API_KEY')
-print("API Key loaded:", app.config['TMDB_API_KEY'])
+
+if not app.secret_key:
+    print("WARNING: FLASK_SECRET_KEY not found in .env file!")
 
 # Email configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
