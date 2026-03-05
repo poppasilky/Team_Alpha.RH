@@ -158,6 +158,12 @@ def login():
     
     return render_template('login.html')
 
+@app.route('/set_language', methods=['POST'])
+def set_language():
+    selected_lang = request.form.get('language', 'en-US')
+    session['language'] = selected_lang
+    return redirect(request.referrer or url_for('home'))
+
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
@@ -205,8 +211,10 @@ def search():
 
 @app.route('/movie/<int:movie_id>')
 def movie_detail(movie_id):
-    movie = tmdb.get_movie_details(movie_id)
-    trailer = tmdb.get_movie_trailer(movie_id)
+    # Pull the language preference from the session (default to English)
+    lang = session.get('language', 'en-US')
+    movie = tmdb.get_movie_details(movie_id, language=lang)
+    trailer = tmdb.get_movie_trailer(movie_id, language=lang)
 
     conn = get_db_connection()
     reviews = conn.execute('''
