@@ -96,3 +96,111 @@
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+/* css for contact.html starts here */
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+#wrapper{
+    width:940px;
+    margin:30px auto;
+}
+
+main {
+    width:580px;
+    float:left;
+}
+
+aside{
+    margin-top: 50px;
+    width:340px;
+    float:right;
+}
+
+footer{
+    clear:both;
+    height: 50px;
+    line-height: 60px;
+    display: flex;
+    justify-content: center;
+    border-top:1px solid #ddd;
+}
+
+footer ul{
+    display: flex;
+}
+
+footer li{
+    margin:0 10px;
+    list-style-type: none;
+}
+
+/* my form styles */
+
+form{
+    max-width: 580px;
+    margin-bottom: 20px;
+}
+
+fieldset{
+    padding:10px;
+    border-radius: 5px;
+    border:1px solid #333;
+}
+
+legend{
+    font-size: 1.3em;
+    font-style: italic;
+    padding:0 5px;
+}
+
+label{
+    display: block;
+    margin-bottom:5px;
+    font-weight:bold;
+    font-size:1.1em;
+}
+
+input{
+    margin-bottom:10px;
+    height:30px;
+    width:100%;
+}
+
+input[type=radio]{
+    height:auto;
+    width:auto;
+    margin-right:3px;
+    margin-bottom: 3px;
+}
+
+form ul{
+    margin-left:15px;
+    margin-bottom:10px;}
+
+form li{
+    list-style-type: none;
+}
+
+select{
+    margin-bottom:10px;
+}
+
+input[type=submit] {
+   width:auto; 
+}
+
+textarea{
+    width: 100%;
+    height:110px;
+    margin-bottom:10px;
+}
+
+h1{
+    color:#333;
+    font-size: 3em;
+    margin-bottom: 12px;
+}

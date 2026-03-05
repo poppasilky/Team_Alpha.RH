@@ -5,7 +5,8 @@ import os
 from werkzeug.utils import secure_filename
 import requests
 from dotenv import load_dotenv
-load_dotenv()                         
+load_dotenv()
+                        
 
 from services import tmdb               
 
@@ -67,6 +68,8 @@ def get_db_connection():
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+
+
 @app.route('/')
 def home():
     offset = request.args.get('offset', 0, type=int)
@@ -97,6 +100,22 @@ def home():
                            has_prev=has_prev,
                            has_next=has_next,
                            comments=comments)
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        gender = request.form.get('gender')
+        comments = request.form.get('comments')
+
+        return redirect(url_for('thx'))
+    
+    return render_template('contact.html')
+
+@app.route('/thx')
+def thx():
+    return render_template('thx.html')
                         
 
 @app.route('/genre/<int:genre_id>')

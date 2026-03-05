@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Team Alpha Movie Archive{% endblock %}</title>
+    <title>Contact</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="../static/styles/toplevel.css" type="text/css" rel="stylesheet">
+    <link href="../static/style.css" type="text/css" rel="stylesheet">
 </head>
+
 <body>
     <nav class="main-nav">
         <div class="nav-links">
@@ -53,13 +54,51 @@
         </div>
     </nav>
 
-    {% block header %}{% endblock %}
+<div id="wrapper">
+    <header>
+    </header>
+    <main>
+    <h1>Contact Us Today!</h1>
+    <form action="{{ url_for('contact')}}" method="post">
+    <fieldset>
+        <legend>Contact Team Alpha</legend>
     
-    <hr>
+
+    <label>Name</label>
+    <input type="text" name="name">
+    <label>Email</label> 
+    <!-- Do not use break tags!! -->
+    <input type="email" name="email">
+
+    <label>Gender</label>
+    <ul>
+    <li><input type="radio" name="gender" value="female">Female</li>
+    <li><input type="radio" name="gender" value="male">Male</li>
+    <li><input type="radio" name="gender" value="other">Other</li>
+    </ul>
+
+    <label>Comments</label>
+    <textarea name="comments"></textarea>
+    <input type="submit" name="submit" value="Submit!">
+
+    </fieldset>
+    </form>
+
+    </main>
+
+    <aside>
+    <h3>About This Page</h3>
+    <p>This form connects you with the Movie Database team for questions, corrections, or feature requests. If you've spotted inaccurate cast details, missing release dates, or need help with your account, we're here to help.</p>
+
+    <h3>Response Time</h3>
+    <p>Most messages receive a reply within 1-2 business days.</p>
+
+
+
+    </aside>
+
     
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+   
 
     <footer class="api-footer">
         <p>
@@ -70,5 +109,8 @@
             This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
         </p>
     </footer>
+    </div>
+    <!-- end of wrapper -->
 </body>
+
 </html>

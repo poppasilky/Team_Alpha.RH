@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Team Alpha Movie Archive{% endblock %}</title>
+    <title>Thank you!</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="../static/styles/toplevel.css" type="text/css" rel="stylesheet">
+    <link href="../static/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
     <nav class="main-nav">
@@ -53,13 +53,22 @@
         </div>
     </nav>
 
-    {% block header %}{% endblock %}
+<div id="wrapper">
     
-    <hr>
+    <header>
+    </header>
+    <main>
+    <h1>Message received!</h1>
     
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+    
+
+    </main>
+
+    <aside>
+    <h3>Thank you for your message.</h3>
+    <p>Your submission has been received by the Movie Database team. We review all inquiries in the order they arrive, and you can expect a response within 1-2 business days. If your message was about incorrect movie data or a missing title, our team will look into it as soon as possible.</p>
+
+    </aside>
 
     <footer class="api-footer">
         <p>
@@ -70,5 +79,8 @@
             This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
         </p>
     </footer>
+
+    </div>
+    <!-- end wrapper -->
 </body>
 </html>
