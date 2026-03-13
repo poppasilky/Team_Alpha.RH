@@ -1,4 +1,29 @@
 /* --- GLOBAL STYLES --- */
+html {
+    font-family: 'Poppins', sans-serif;
+}
+
+body,
+button,
+input,
+select,
+textarea{
+    font: inherit;
+}
+option,
+label,
+a,
+p,
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Poppins', sans-serif;
+}
 html, body {
     height: 100%;
     margin: 0;
@@ -9,7 +34,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background: linear-gradient(135deg, #C5ADC5, #B2B5E0) fixed;
-    font-family: 'Fredoka', sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-align: center;
 }
 
@@ -23,20 +48,28 @@ body {
 
 /* --- TYPOGRAPHY --- */
 .gradient-title {
-    font-size: 70px;
-    font-weight: 700;
-    background: linear-gradient(90deg, #ffffff, #000000);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 10px 0 0 0;
+
+    background: linear-gradient(
+        90deg,
+        #2b1b55 0%,
+        #6d3bbd 40%,
+        #9f7cff 70%,
+        #d4c8ff 100%
+    );
+
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin: 10px 0 0 0;
 }
-
 .script-subtitle {
-    font-family: 'Pacifico', cursive;
-    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 500;
     color: white;
-    margin-top: 5px;
 }
 
 /* --- BUTTONS --- */
