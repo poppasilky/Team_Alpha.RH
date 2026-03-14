@@ -1,1 +1,4 @@
+users.db
+instance/
 .env
+.venv/

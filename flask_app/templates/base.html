@@ -13,7 +13,7 @@
 <body>
     <nav class="main-nav">
         <div class="nav-links">
-            <a href="/">Home</a>
+            <a href="{{ url_for('home') }}">Home</a>
     
             <div class="dropdown">
                 <button class="dropbtn">Genres ▼</button>
@@ -26,20 +26,20 @@
                 </div>
             </div>
 
-            <a href="/contact">Contact</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
 
             {% if session.get('user_id') %}
                 <span class="login-status">Logged in as <strong>{{ session.get('username') }}</strong></span>
-                <a href="/dashboard">Dashboard</a>
-                <a href="/logout">Logout</a>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
             {% endif %}
         </div>
 
         <div class="nav-right-group">
-            <form action="/search" method="get" class="search-form">
+            <form action="{{ url_for('search') }}" method="get" class="search-form">
                 <input type="text" name="q" placeholder="Search movies..." required>
                 <button type="submit">Search</button>
             </form>

@@ -11,7 +11,8 @@
     <p style="color: white; font-size: 20px; margin-top: 20px;">Welcome, {{ username }}!</p>
     <p style="color: white;">you are logged in!</p>
     <div style="margin-top: 30px;">
-        <a href="/upload"><button class="btn">Upload Media</button></a>
-        <a href="/logout"><button class="btn" style="margin-left: 10px; background: #666;">Logout</button></a>
+        <a href="{{ url_for('upload') }}"><button class="btn">Upload Media</button></a>
+        <a href="{{ url_for('logout') }}"><button class="btn" style="margin-left: 10px; background: #666;">Logout</button></a>
+        <a href="{{ url_for('home') }}" class="btn">Back to Home</a>
     </div>
 {% endblock %}
