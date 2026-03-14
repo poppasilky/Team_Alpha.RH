@@ -204,3 +204,21 @@ h1{
     font-size: 3em;
     margin-bottom: 12px;
 }
+.post-feed {
+margin-top: 25px;
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+
+.post-card {
+background: rgba(255,255,255,0.12);
+padding: 18px;
+border-radius: 14px;
+}
+
+.post-meta {
+font-size: 0.85rem;
+opacity: 0.8;
+margin-bottom: 6px;
+}

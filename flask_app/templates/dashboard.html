@@ -1,17 +1,155 @@
 ﻿{% extends "base.html" %}
 
-{% block title %}Team Alpha - Dashboard{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block header %}
     <h1 class="gradient-title">TEAM ALPHA</h1>
-    <div class="script-subtitle">Dashboard</div>
+    <p class="dashboard-subtitle">Welcome, {{ username }}!</p>
+    <p class="dashboard-description">A creative movie space to share moments, reviews, and ideas.</p>
 {% endblock %}
 
 {% block content %}
-    <p style="color: white; font-size: 20px; margin-top: 20px;">Welcome, {{ username }}!</p>
-    <p style="color: white;">you are logged in!</p>
-    <div style="margin-top: 30px;">
-        <a href="/upload"><button class="btn">Upload Media</button></a>
-        <a href="/logout"><button class="btn" style="margin-left: 10px; background: #666;">Logout</button></a>
+<div class="dashboard-shell">
+
+    <div class="creative-toolbar">
+        <button class="dashboard-tab active" onclick="showPanel('thoughts')">🎬 Movie Thoughts</button>
+        <button class="dashboard-tab" onclick="showPanel('reviews')">✍️ Reviews</button>
+        <button class="dashboard-tab" onclick="showPanel('moments')">📸 Premiere Moments</button>
+        <button class="dashboard-tab" onclick="showPanel('community')">🟢 Community</button>
     </div>
+
+    <div class="dashboard-grid">
+
+        <section id="thoughts" class="dashboard-panel active-panel">
+            <h2>Share a Movie Thought</h2>
+            <p>What film matches your current mood? What movie scene stayed with you the longest?</p>
+
+            <form class="modern-form" method="POST" action="{{ url_for('post_thought') }}">
+
+            <label for="thought-title">Title</label>
+            <input type="text" name="title">
+
+            <label>Your thoughts</label>
+            <textarea name="content" required></textarea>
+
+            <div class="dashboard-actions">
+            <button type="submit" class="btn">Post Thought</button>
+            </div>
+
+            </form>
+            <div class="post-feed">
+
+{% for post in posts %}
+
+<div class="post-card">
+
+<h3>{{ post.title }}</h3>
+
+<p class="post-meta">
+by {{ post.username }} • {{ post.created_at }}
+</p>
+
+<p>{{ post.content }}</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+        </section>
+
+        <section id="reviews" class="dashboard-panel">
+            <h2>Write a Review</h2>
+            <p>Give your honest opinion and build your movie voice.</p>
+
+            <form class="modern-form">
+                <label for="movie-name">Movie</label>
+                <input type="text" id="movie-name" placeholder="Type a movie title">
+
+                <label for="rating">Rating</label>
+                <select id="rating">
+                    <option>5/5 - Masterpiece</option>
+                    <option>4/5 - Great</option>
+                    <option>3/5 - Good</option>
+                    <option>2/5 - Mixed</option>
+                    <option>1/5 - Not for me</option>
+                </select>
+
+                <label for="review-content">Review</label>
+                <textarea id="review-content" placeholder="What worked? What didn’t? Would you recommend it?"></textarea>
+
+                <div class="dashboard-actions">
+                    <button type="button" class="btn">Publish Review</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="moments" class="dashboard-panel">
+            <h2>Upload a Premiere Moment</h2>
+            <p>Share a picture, poster, screenshot, or any memory connected to a movie experience.</p>
+
+            <div class="dashboard-actions">
+                <a href="{{ url_for('upload') }}" class="btn">Go to Upload</a>
+                <a href="{{ url_for('home') }}" class="btn secondary-btn">Back Home</a>
+            </div>
+
+            <div class="inspo-box">
+                <h3>Ideas</h3>
+                <ul>
+                    <li>A photo from a theater visit</li>
+                    <li>A premiere outfit or ticket</li>
+                    <li>A screenshot of your favorite scene</li>
+                    <li>A poster that inspires you</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="community" class="dashboard-panel">
+            <h2>Community Presence</h2>
+            <p>See who is currently active in the movie space.</p>
+
+            <div class="presence-grid">
+                <div class="presence-card">
+                    <h3>Users Online</h3>
+                    {% if online_users %}
+                        <ul class="status-list">
+                            {% for user in online_users %}
+                                <li><span class="status-dot online"></span>{{ user }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No users online right now.</p>
+                    {% endif %}
+                </div>
+
+                <div class="presence-card">
+                    <h3>Users Offline</h3>
+                    {% if offline_users %}
+                        <ul class="status-list">
+                            {% for user in offline_users %}
+                                <li><span class="status-dot offline"></span>{{ user }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Everyone is online.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script>
+function showPanel(panelId) {
+    const panels = document.querySelectorAll('.dashboard-panel');
+    const tabs = document.querySelectorAll('.dashboard-tab');
+
+    panels.forEach(panel => panel.classList.remove('active-panel'));
+    tabs.forEach(tab => tab.classList.remove('active'));
+
+    document.getElementById(panelId).classList.add('active-panel');
+    event.currentTarget.classList.add('active');
+}
+</script>
 {% endblock %}

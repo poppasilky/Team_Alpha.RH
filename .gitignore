@@ -1,2 +1,6 @@
 .env
 users.db
+__pycache__/
+instance/
+*.pyc
+flask_app/uploads/

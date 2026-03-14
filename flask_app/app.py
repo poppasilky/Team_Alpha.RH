@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 import requests
 from dotenv import load_dotenv
 load_dotenv()
+from datetime import datetime, timedelta
 
 # Email support (your branch)
 from flask_mail import Mail, Message
@@ -83,6 +84,23 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
     ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS user_presence (
+            user_id INTEGER PRIMARY KEY,
+            last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    ''')
+    cursor.execute('''
+CREATE TABLE IF NOT EXISTS creative_posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title TEXT,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+)
+''')
     conn.commit()
     conn.close()
 
@@ -93,6 +111,16 @@ def get_db_connection():
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
+
+def update_user_presence(user_id):
+    conn = get_db_connection()
+    conn.execute('''
+        INSERT INTO user_presence (user_id, last_seen)
+        VALUES (?, CURRENT_TIMESTAMP)
+        ON CONFLICT(user_id) DO UPDATE SET last_seen = CURRENT_TIMESTAMP
+    ''', (user_id,))
+    conn.commit()
+    conn.close()
 
 
 
@@ -218,9 +246,10 @@ def login():
         if user:
             session['user_id'] = user['id']
             session['username'] = user['username']
+            update_user_presence(user['id'])
             return redirect('/dashboard')
         else:
-            return "Invalid username or password!"
+            return render_template('login.html', error="Invalid username or password!")
     
     return render_template('login.html')
 
@@ -234,9 +263,52 @@ def set_language():
 def dashboard():
     if 'user_id' not in session:
         return redirect('/login')
-    
-    return render_template('dashboard.html', 
-                          username=session.get('username'))
+
+    update_user_presence(session['user_id'])
+
+    conn = get_db_connection()
+
+    posts = conn.execute(
+        '''
+        SELECT creative_posts.*, users.username
+        FROM creative_posts
+        JOIN users ON creative_posts.user_id = users.id
+        ORDER BY created_at DESC
+        '''
+    ).fetchall()
+
+    presence_rows = conn.execute('''
+        SELECT users.username, user_presence.last_seen
+        FROM user_presence
+        JOIN users ON users.id = user_presence.user_id
+        ORDER BY user_presence.last_seen DESC
+    ''').fetchall()
+
+    conn.close()
+
+    online_users = []
+    offline_users = []
+
+    now = datetime.now()
+
+    for row in presence_rows:
+        try:
+            last_seen = datetime.fromisoformat(row['last_seen'])
+        except ValueError:
+            last_seen = datetime.strptime(row['last_seen'], '%Y-%m-%d %H:%M:%S')
+
+        if now - last_seen <= timedelta(minutes=5):
+            online_users.append(row['username'])
+        else:
+            offline_users.append(row['username'])
+
+    return render_template(
+        'dashboard.html',
+        username=session.get('username'),
+        posts=posts,
+        online_users=online_users,
+        offline_users=offline_users
+    )
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -383,6 +455,30 @@ def post_comment():
     offset = request.args.get('offset', 0)
     return redirect(url_for('home', offset=offset))
 
+@app.route('/post_thought', methods=['POST'])
+def post_thought():
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    title = request.form.get('title', '').strip()
+    content = request.form.get('content', '').strip()
+
+    if not content:
+        return redirect('/dashboard')
+
+    conn = get_db_connection()
+    conn.execute(
+        '''
+        INSERT INTO creative_posts (user_id, title, content)
+        VALUES (?, ?, ?)
+        ''',
+        (session['user_id'], title, content)
+    )
+    conn.commit()
+    conn.close()
+
+    return redirect('/dashboard')
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all() 
@@ -406,3 +502,4 @@ def filter_movies():
 
     movies = query.all()
     return render_template('movie_archive.html', movies=movies)
+

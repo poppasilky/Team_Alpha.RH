@@ -1,20 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Alpha - Upload Media</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Upload Media{% endblock %}
+
+{% block header %}
     <h1 class="gradient-title">TEAM ALPHA</h1>
-    <div class="script-subtitle">Upload Media</div>
-    <form method="POST" enctype="multipart/form-data" style="margin-top: 30px;">
-        <input type="file" name="file" required style="padding: 10px; margin: 10px; color: white;">
-        <br><br>
-        <button type="submit" class="btn">Upload</button>
-    </form>
-    <a href="/dashboard"><button class="btn" style="margin-top: 20px; background: #666;">Back</button></a>
-</body>
-</html>
+    <p style="color: white; font-size: 20px; margin-top: 20px;">Upload Media</p>
+    <p style="color: white;">Share something that reflects your movie taste and creativity</p>
+{% endblock %}
+
+{% block content %}
+<div class="upload-layout">
+    <div class="upload-card">
+        <h2>Upload Your Media</h2>
+        <p>
+            Add posters, screenshots, or other media that connect with the movies you love.
+        </p>
+
+        <form method="POST" enctype="multipart/form-data" class="modern-form">
+            <label class="file-upload">
+    <input type="file" name="file" required>
+    Choose File
+</label>
+
+<button type="submit" class="btn">Upload</button>
+        </form>
+
+        <div style="margin-top: 18px;">
+            <a href="{{ url_for('dashboard') }}" class="btn secondary-btn">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
