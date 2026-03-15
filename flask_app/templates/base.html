@@ -43,7 +43,7 @@
                 <input type="text" name="q" placeholder="Search movies..." required>
                 <button type="submit">Search</button>
             </form>
-
+            <button id="theme-toggle">🌙</button>
             <form action="{{ url_for('set_language') }}" method="POST" class="lang-form">
                 <select name="language" onchange="this.form.submit()">
                     <option value="en-US" {% if session.get('language') == 'en-US' %}selected{% endif %}>🇺🇸 English</option>
@@ -62,7 +62,25 @@
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+<script>
+const toggle = document.getElementById("theme-toggle");
 
+toggle.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark-mode");
+
+    if (document.documentElement.classList.contains("dark-mode")) {
+        localStorage.setItem("theme", "dark");
+    } else {
+        localStorage.setItem("theme", "light");
+    }
+});
+
+if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark-mode");
+}
+</script>
+</body>
+</html>
     <footer class="api-footer">
         <p>
             <a href="https://www.themoviedb.org/" target="_blank">

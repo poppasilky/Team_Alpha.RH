@@ -246,3 +246,44 @@ body {
     color: #ffffff;
     text-decoration: underline; /* Helps highlight the actual name */
 }
+
+/* ================= DARK MODE ================= */
+
+/* Override the gradient background */
+html.dark-mode body {
+    background: #121212 !important;
+    color: #f5f5f5;
+}
+
+/* Navigation */
+.dark-mode .main-nav {
+    background-color: #1e1e1e;
+}
+
+/* Movie cards */
+.dark-mode .movie-card {
+    background: #1a1a1a;
+}
+
+/* Dropdown menus */
+.dark-mode .dropdown-content {
+    background-color: #2a2a2a;
+}
+
+/* Inputs and selects */
+.dark-mode input,
+.dark-mode select {
+    background-color: #2a2a2a;
+    color: white;
+}
+
+/* Buttons */
+.dark-mode button {
+    background-color: #333;
+    color: white;
+}
+
+/* DARK MODE - FULL PAGE */
+html.dark-mode body {
+    background: #121212 !important;
+}
