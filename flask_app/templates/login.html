@@ -1,20 +1,36 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Alpha - Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/toplevel.css') }}">
-</head>
-<body>
+﻿{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}
     <h1 class="gradient-title">TEAM ALPHA</h1>
-    <div class="script-subtitle">Login</div>
-    <form method="POST" style="margin-top: 30px;">
-        <p><input type="text" name="username" placeholder="Username" required style="padding: 10px; margin: 10px; border-radius: 5px; border: none;"></p>
-        <p><input type="password" name="password" placeholder="Password" required style="padding: 10px; margin: 10px; border-radius: 5px; border: none;"></p>
-        <p><input type="submit" value="Login" class="btn"></p>
-    </form>
-    <p><a href="/register" style="color: white; text-decoration: none;">Need an account? Register</a></p>
-</body>
-</html>
+    <p class="auth-subtitle">Login</p>
+{% endblock %}
+
+{% block content %}
+<div class="auth-layout">
+    <div class="auth-card">
+        <h2>Welcome Back</h2>
+
+        {% if error %}
+<div class="auth-error">
+    {{ error }}
+</div>
+{% endif %}
+        
+        <p class="auth-text">Log in to continue exploring and sharing your movie experiences.</p>
+
+        <form method="POST" class="modern-form">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <p class="auth-link-text">
+            Need an account?
+            <a href="{{ url_for('register') }}">Register</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

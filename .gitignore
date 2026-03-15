@@ -1,4 +1,6 @@
-users.db
-instance/
 .env
-.venv/
+users.db
+__pycache__/
+instance/
+*.pyc
+flask_app/uploads/
