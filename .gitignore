@@ -1,6 +1,12 @@
-.env
-users.db
+# Python cache files
 __pycache__/
-instance/
 *.pyc
-flask_app/uploads/
+
+# Virtual environments
+venv/
+
+# Environment variables
+.env
+
+# Database files (optional)
+*.db
