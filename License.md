@@ -1,6 +1,6 @@
 # License
 
-Copyright (c) 2026 Team Alpha
+Copyright (c) 2026 Ryan Hill
 
 This work is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License** (CC BY-NC 4.0).
 
