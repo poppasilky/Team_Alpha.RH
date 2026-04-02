@@ -12,13 +12,6 @@ A Flask-based web application for organizing and managing movie information. Thi
 ## MVP Description
 Movie Archive solves the problem of keeping track of movies you've watched and want to watch. The intended user is any movie enthusiast who wants to maintain a personal movie collection. The primary action users can take is adding movies to their personal archive with basic information and assigning a simple rating. The MVP will allow viewing the movie list, adding new entries, and filtering by genre or rating - all without user accounts or complex features.
 
-## Sprint 3 Objectives
-1. **Homepage**: Create HTML page with navigation to other pages
-2. **View Movies**: Display all movies from a CSV file in a table
-3. **Add Movies**: Form that lets users add new movies
-4. **Save Functionality**: Save new movies to the CSV file
-5. **Basic Search**: Filter movies by genre
-
 ## MVP Scope
 - Basic movie listing page
 - Form to add new movies
